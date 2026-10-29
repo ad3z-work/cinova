@@ -11,8 +11,8 @@ const schema = z.object({
 export type StreamSource = { name: string; url: string; quality?: string; referrer?: "origin" | "no-referrer" };
 
 /**
- * Frameable embed players, best-first. The first provider is the most reliable
- * at resolving newly released TMDB titles; the others remain as manual fallbacks.
+ * Single playback provider (EmbedWave). Kept server-side so its name and
+ * URL never show in the UI; the player loads it silently as the default.
  */
 function embedServers(data: z.infer<typeof schema>): StreamSource[] {
   const s = data.season ?? 1;
@@ -20,29 +20,7 @@ function embedServers(data: z.infer<typeof schema>): StreamSource[] {
   const isTv = data.type === "tv";
   return [
     {
-      name: "Server 1 · Auto HD",
-      url: isTv
-        ? `https://player.videasy.net/tv/${data.id}/${s}/${e}`
-        : `https://player.videasy.net/movie/${data.id}`,
-    },
-    {
-      name: "Server 2",
-      url: isTv ? `https://vidlink.pro/tv/${data.id}/${s}/${e}` : `https://vidlink.pro/movie/${data.id}`,
-    },
-    {
-      name: "Server 3",
-      url: isTv
-        ? `https://vidsrc.to/embed/tv/${data.id}/${s}/${e}`
-        : `https://vidsrc.to/embed/movie/${data.id}`,
-    },
-    {
-      name: "Server 4",
-      url: isTv
-        ? `https://www.2embed.cc/embedtv/${data.id}&s=${s}&e=${e}`
-        : `https://www.2embed.cc/embed/${data.id}`,
-    },
-    {
-      name: "Server 5 · EmbedWave",
+      name: "EmbedWave",
       url: isTv
         ? `https://embedwave.cc/embed/tv/${data.id}/${s}/${e}`
         : `https://embedwave.cc/embed/movie/${data.id}`,
@@ -52,25 +30,13 @@ function embedServers(data: z.infer<typeof schema>): StreamSource[] {
 }
 
 /**
- * Resolves playable embed players for a title. The CodeSpecter key stays on
+ * Resolves the playable embed player for a title. The CodeSpecter key stays on
  * the server; only playback URLs reach the browser.
  */
 export const getStreamSources = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => schema.parse(input))
   .handler(async ({ data }) => {
-    const apiKey = process.env["CODESPECTER_API_KEY"] ?? process.env["NEXSTREAM_API_KEY"];
-
-    const path =
-      data.type === "movie"
-        ? `movie/${data.id}`
-        : `tv/${data.id}/${data.season ?? 1}/${data.episode ?? 1}`;
-
     const sources = embedServers(data);
-    if (apiKey) {
-      const key = encodeURIComponent(apiKey);
-      sources.push({ name: "CodeSpecter Player", url: `https://api.codespecters.com/embed/${path}?apikey=${key}` });
-    }
-
     return { sources, embed: null as string | null, error: null as string | null };
   });
 

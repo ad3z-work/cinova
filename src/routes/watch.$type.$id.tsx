@@ -288,34 +288,6 @@ function WatchPage() {
         </div>
       </div>
 
-      {mode === "full" && (
-        <div className="mt-3 flex flex-wrap items-center gap-2 px-4 md:px-10">
-          {sources.length > 1 &&
-            sources.map((s, i) => (
-              <button
-                key={s.url}
-                onClick={() => setSourceIndex(i)}
-                className={`px-1 py-1.5 text-xs font-semibold transition-colors ${
-                  i === sourceIndex ? "text-primary underline underline-offset-4" : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {s.name || `Server ${i + 1}`}
-              </button>
-            ))}
-          {playerUrl && (
-            <a
-              href={playerUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="px-1 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:text-primary"
-            >
-              Open player in new tab
-            </a>
-          )}
-          <span className="text-xs text-muted-foreground">If one server is unavailable, choose another source.</span>
-        </div>
-      )}
-
       <div className="px-4 pt-6 md:px-10">
         <h1 className="text-2xl font-extrabold md:text-3xl">
           {data.title}
