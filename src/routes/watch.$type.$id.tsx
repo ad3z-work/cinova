@@ -71,7 +71,6 @@ function WatchPage() {
   const currentEp = episodes.find((ep) => ep.episode_number === search.e) ?? episodes[0];
 
   const [mode, setMode] = useState<"full" | "trailer">("full");
-  const [sourceIndex, setSourceIndex] = useState(0);
   const playerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -166,37 +165,9 @@ function WatchPage() {
       }),
     staleTime: 1000 * 60 * 10,
   });
-  // Multiple frameable players, best-first; auto-failover picks the next one
-  // if the current server never renders.
-  const sources = (stream.data?.sources ?? []).map((s, i) => ({
-    name: s.name || `Server ${i + 1}`,
-    url: s.url,
-    referrer: s.referrer,
-  }));
-
-
-  const sourceKey = sources.map((s) => s.url).join("|");
-  const activeSource = sources[sourceIndex] ?? sources[0];
-  const playerUrl = activeSource?.url ?? null;
-
-  // Always start on the best-ranked server whenever the title/episode changes.
-  useEffect(() => {
-    setSourceIndex(0);
-  }, [sourceKey]);
-
-  // If the chosen server never renders, silently roll over to the next one.
-  const [frameLoaded, setFrameLoaded] = useState(false);
-  useEffect(() => {
-    setFrameLoaded(false);
-  }, [playerUrl]);
-  useEffect(() => {
-    if (frameLoaded || !playerUrl || mode !== "full") return;
-    const total = sources.length;
-    const timer = window.setTimeout(() => {
-      setSourceIndex((i) => (i + 1 < total ? i + 1 : i));
-    }, 9000);
-    return () => window.clearTimeout(timer);
-  }, [frameLoaded, playerUrl, mode, sources.length]);
+  // Single server-side-resolved player; its provider stays invisible to users.
+  const source = stream.data?.sources[0];
+  const playerUrl = source?.url ?? null;
 
   return (
     <div className="min-h-screen pb-16 pt-20">
@@ -253,10 +224,7 @@ function WatchPage() {
                 key={playerUrl}
                 src={playerUrl}
                 title={`${data.title} — full stream`}
-                referrerPolicy={activeSource?.referrer ?? "origin"}
-                onLoad={() => setFrameLoaded(true)}
-
-
+                referrerPolicy={source?.referrer ?? "origin"}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 allowFullScreen
                 className="h-full w-full border-0"
