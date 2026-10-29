@@ -22,8 +22,8 @@ function embedServers(data: z.infer<typeof schema>): StreamSource[] {
     {
       name: "EmbedWave",
       url: isTv
-        ? `https://embedwave.cc/embed/tv/${data.id}/${s}/${e}`
-        : `https://embedwave.cc/embed/movie/${data.id}`,
+        ? `https://web.nxsha.app/embed/tv/${data.id}/${s}/${e}?server=AwsPly-[Multi-Lang]`
+        : `https://web.nxsha.app/embed/movie/${data.id}?server=AwsPly-[Multi-Lang]`,
       referrer: "no-referrer",
     },
   ];
