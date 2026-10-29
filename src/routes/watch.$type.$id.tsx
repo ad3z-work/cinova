@@ -171,6 +171,7 @@ function WatchPage() {
   const sources = (stream.data?.sources ?? []).map((s, i) => ({
     name: s.name || `Server ${i + 1}`,
     url: s.url,
+    referrer: s.referrer,
   }));
 
 
@@ -252,7 +253,7 @@ function WatchPage() {
                 key={playerUrl}
                 src={playerUrl}
                 title={`${data.title} — full stream`}
-                referrerPolicy="origin"
+                referrerPolicy={activeSource?.referrer ?? "origin"}
                 onLoad={() => setFrameLoaded(true)}
 
 
