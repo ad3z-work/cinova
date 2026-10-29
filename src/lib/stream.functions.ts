@@ -8,7 +8,7 @@ const schema = z.object({
   episode: z.number().int().positive().optional(),
 });
 
-export type StreamSource = { name: string; url: string; quality?: string };
+export type StreamSource = { name: string; url: string; quality?: string; referrer?: "origin" | "no-referrer" };
 
 /**
  * Frameable embed players, best-first. The first provider is the most reliable
@@ -40,6 +40,13 @@ function embedServers(data: z.infer<typeof schema>): StreamSource[] {
       url: isTv
         ? `https://www.2embed.cc/embedtv/${data.id}&s=${s}&e=${e}`
         : `https://www.2embed.cc/embed/${data.id}`,
+    },
+    {
+      name: "Server 5 · EmbedWave",
+      url: isTv
+        ? `https://embedwave.cc/embed/tv/${data.id}/${s}/${e}`
+        : `https://embedwave.cc/embed/movie/${data.id}`,
+      referrer: "no-referrer",
     },
   ];
 }
