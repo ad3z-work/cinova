@@ -62,8 +62,8 @@ function TitlePage() {
     enabled: type === "tv" && data.seasons.length > 0,
   });
 
-  const backdrop = img(data.backdrop_path, "w1280");
-  const poster = img(data.poster_path, "w500");
+  const backdrop = img(data.backdrop_path, "original");
+  const poster = img(data.poster_path, "w780");
 
   return (
     <div className="pb-16">
