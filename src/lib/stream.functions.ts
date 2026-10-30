@@ -20,10 +20,10 @@ function embedServers(data: z.infer<typeof schema>): StreamSource[] {
   const isTv = data.type === "tv";
   return [
     {
-      name: "EmbedWave",
+      name: "Vidrift",
       url: isTv
-        ? `https://web.nxsha.app/embed/tv/${data.id}/${s}/${e}?server=AwsPly-[Multi-Lang]`
-        : `https://web.nxsha.app/embed/movie/${data.id}?server=AwsPly-[Multi-Lang]`,
+        ? `https://embed.vidrift.net/embed/tv/${data.id}/${s}/${e}`
+        : `https://embed.vidrift.net/embed/movie/${data.id}`,
       referrer: "no-referrer",
     },
   ];
