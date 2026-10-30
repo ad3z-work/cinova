@@ -154,14 +154,7 @@ function WatchPage() {
       </div>
 
       <div className="mt-4 bg-black md:px-0">
-        <div
-          ref={playerRef}
-          className={`relative w-full bg-black ${
-            isFullscreen
-              ? "fixed inset-0 z-50 h-screen max-w-none"
-              : "mx-auto aspect-video max-w-6xl"
-          }`}
-        >
+        <div className="relative mx-auto aspect-video max-w-6xl w-full bg-black">
           {mode === "full" ? (
             playerUrl ? (
               <iframe
