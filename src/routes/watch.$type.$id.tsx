@@ -1,8 +1,8 @@
 import { Img } from "@/components/Img";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, Info, Play, Film, Maximize, Minimize } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Info, Play, Film } from "lucide-react";
 import { z } from "zod";
 import { getDetail, getSeason } from "@/lib/tmdb.functions";
 import { getStreamSources } from "@/lib/stream.functions";
@@ -71,55 +71,7 @@ function WatchPage() {
   const currentEp = episodes.find((ep) => ep.episode_number === search.e) ?? episodes[0];
 
   const [mode, setMode] = useState<"full" | "trailer">("full");
-  const playerRef = useRef<HTMLDivElement>(null);
-  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  useEffect(() => {
-    const onChange = () =>
-      setIsFullscreen(
-        Boolean(
-          document.fullscreenElement ??
-            (document as unknown as { webkitFullscreenElement?: Element }).webkitFullscreenElement,
-        ),
-      );
-    document.addEventListener("fullscreenchange", onChange);
-    document.addEventListener("webkitfullscreenchange", onChange);
-    return () => {
-      document.removeEventListener("fullscreenchange", onChange);
-      document.removeEventListener("webkitfullscreenchange", onChange);
-    };
-  }, []);
-
-  // Escape also exits our CSS-based fallback fullscreen.
-  useEffect(() => {
-    if (!isFullscreen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && !document.fullscreenElement) setIsFullscreen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [isFullscreen]);
-
-  const toggleFullscreen = async () => {
-    const doc = document as Document & { webkitExitFullscreen?: () => Promise<void> };
-    const el = playerRef.current as (HTMLDivElement & {
-      webkitRequestFullscreen?: () => Promise<void>;
-    }) | null;
-
-    if (document.fullscreenElement || (doc as unknown as { webkitFullscreenElement?: Element }).webkitFullscreenElement) {
-      await (document.exitFullscreen?.() ?? doc.webkitExitFullscreen?.() ?? Promise.resolve()).catch(() => {});
-      setIsFullscreen(false);
-      return;
-    }
-    if (!el) return;
-    try {
-      await (el.requestFullscreen?.() ?? el.webkitRequestFullscreen?.() ?? Promise.reject());
-      setIsFullscreen(true);
-    } catch {
-      // iOS Safari blocks element fullscreen: fall back to a full-viewport layer.
-      setIsFullscreen(true);
-    }
-  };
   const episodeNumber = currentEp?.episode_number ?? search.e ?? 1;
 
   // Record into Continue Watching, updating progress while the page is open.
@@ -202,22 +154,7 @@ function WatchPage() {
       </div>
 
       <div className="mt-4 bg-black md:px-0">
-        <div
-          ref={playerRef}
-          className={`relative w-full bg-black ${
-            isFullscreen
-              ? "fixed inset-0 z-50 h-screen max-w-none"
-              : "mx-auto aspect-video max-w-6xl"
-          }`}
-        >
-          <button
-            onClick={toggleFullscreen}
-            aria-label={isFullscreen ? "Exit full screen" : "Watch full screen"}
-            className="absolute right-3 top-3 z-10 inline-flex items-center gap-1.5 px-2 py-1.5 text-xs font-semibold text-foreground drop-shadow-md transition-colors hover:text-primary"
-          >
-            {isFullscreen ? <Minimize className="h-3.5 w-3.5" /> : <Maximize className="h-3.5 w-3.5" />}
-            {isFullscreen ? "Exit" : "Full screen"}
-          </button>
+        <div className="relative mx-auto aspect-video max-w-6xl w-full bg-black">
           {mode === "full" ? (
             playerUrl ? (
               <iframe
