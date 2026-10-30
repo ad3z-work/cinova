@@ -4,7 +4,7 @@ import { img, year, type MediaItem } from "@/lib/tmdb";
 import { Img } from "@/components/Img";
 
 export function MediaCard({ item, className = "" }: { item: MediaItem; className?: string }) {
-  const poster = img(item.poster_path, "w342") ?? img(item.backdrop_path, "w500");
+  const poster = img(item.poster_path, "w500") ?? img(item.backdrop_path, "w780");
   return (
     <Link
       to="/title/$type/$id"
