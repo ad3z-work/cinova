@@ -70,6 +70,8 @@ function WatchPage() {
   const episodes = seasonData.data?.episodes ?? [];
   const currentEp = episodes.find((ep) => ep.episode_number === search.e) ?? episodes[0];
 
+  const [mode, setMode] = useState<"full" | "trailer">("full");
+
   const episodeNumber = currentEp?.episode_number ?? search.e ?? 1;
 
   // Record into Continue Watching, updating progress while the page is open.
