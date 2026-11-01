@@ -32,37 +32,6 @@ export default defineConfig({
           }
         },
       },
-      VitePWA({
-        strategies: "generateSW",
-        registerType: "autoUpdate",
-        injectRegister: null, // registration happens only in src/lib/pwa-register.ts
-        filename: "sw.js",
-        manifest: false, // we ship public/manifest.webmanifest ourselves
-        devOptions: { enabled: false },
-        workbox: {
-          navigateFallback: null,
-          runtimeCaching: [
-            {
-              // HTML navigations: always prefer the network
-              urlPattern: ({ request }: { request: Request }) => request.mode === "navigate",
-              handler: "NetworkFirst",
-              options: {
-                cacheName: "lumiere-pages",
-                networkTimeoutSeconds: 5,
-              },
-            },
-            {
-              // Same-origin hashed build assets only
-              urlPattern: ({ url, request }: { url: URL; request: Request }) =>
-                url.origin === self.location.origin &&
-                request.mode !== "navigate" &&
-                /\/assets\/.+\.[a-f0-9]{8,}\./i.test(url.pathname),
-              handler: "CacheFirst",
-              options: { cacheName: "lumiere-assets" },
-            },
-          ],
-        },
-      }),
     ],
   },
 });
