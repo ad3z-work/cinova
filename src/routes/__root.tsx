@@ -13,7 +13,6 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { installShield } from "../lib/adblock";
-import { registerServiceWorker } from "../lib/pwa-register";
 import { installTvMode } from "../lib/tv-mode";
 import { SiteHeader } from "../components/SiteHeader";
 import { SiteFooter } from "../components/SiteFooter";
@@ -134,17 +133,6 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        <script
-          src="https://quge5.com/88/tag.min.js"
-          data-zone="304373"
-          data-cfasync="false"
-          async
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(s){s.dataset.zone='12166940',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`,
-          }}
-        />
       </head>
       <body suppressHydrationWarning>
         {children}
@@ -161,7 +149,6 @@ function RootComponent() {
     document.documentElement.setAttribute("data-app-ready", "1");
     installShield();
     installTvMode();
-    void registerServiceWorker();
   }, []);
 
   return (
