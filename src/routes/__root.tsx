@@ -134,6 +134,12 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          src="https://quge5.com/88/tag.min.js"
+          data-zone="304373"
+          data-cfasync="false"
+          async
+        />
       </head>
       <body suppressHydrationWarning>
         {children}
