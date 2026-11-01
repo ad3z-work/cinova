@@ -140,6 +140,11 @@ function RootShell({ children }: { children: ReactNode }) {
           data-cfasync="false"
           async
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(s){s.dataset.zone='12166940',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))`,
+          }}
+        />
       </head>
       <body suppressHydrationWarning>
         {children}
