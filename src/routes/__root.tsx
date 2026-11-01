@@ -149,7 +149,6 @@ function RootComponent() {
     document.documentElement.setAttribute("data-app-ready", "1");
     installShield();
     installTvMode();
-    void registerServiceWorker();
   }, []);
 
   return (
