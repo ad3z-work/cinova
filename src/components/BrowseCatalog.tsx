@@ -64,14 +64,15 @@ function FilterSelect({
   children: React.ReactNode;
 }) {
   return (
-    <label className="relative inline-flex items-center">
+    <label className="relative inline-flex shrink-0 items-center">
       <span className="sr-only">{label}</span>
       <select
         value={value}
         aria-label={label}
         onChange={(e) => onChange(e.target.value)}
-        className={`max-w-full appearance-none border-b border-border bg-transparent py-2 pl-1 pr-7 text-xs font-medium outline-none transition-colors focus:border-primary ${
-          active ? "border-primary text-primary" : "text-muted-foreground hover:text-foreground"
+        style={{ colorScheme: "dark" }}
+        className={`w-auto min-w-[7rem] shrink-0 appearance-none whitespace-nowrap border-b border-border bg-background py-2 pl-1 pr-7 text-sm font-medium outline-none transition-colors focus:border-primary [&>option]:bg-background [&>option]:text-foreground ${
+          active ? "border-primary text-primary" : "text-foreground"
         }`}
       >
         {children}
