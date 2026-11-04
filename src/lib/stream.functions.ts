@@ -11,7 +11,7 @@ const schema = z.object({
 export type StreamSource = { name: string; url: string; quality?: string; referrer?: "origin" | "no-referrer" };
 
 /**
- * Single playback provider (EmbedWave). Kept server-side so its name and
+ * Single playback provider (CineSrc). Kept server-side so its name and
  * URL never show in the UI; the player loads it silently as the default.
  */
 function embedServers(data: z.infer<typeof schema>): StreamSource[] {
@@ -20,10 +20,10 @@ function embedServers(data: z.infer<typeof schema>): StreamSource[] {
   const isTv = data.type === "tv";
   return [
     {
-      name: "Vidrift",
+      name: "CineSrc",
       url: isTv
-        ? `https://embed.vidrift.net/embed/tv/${data.id}/${s}/${e}`
-        : `https://embed.vidrift.net/embed/movie/${data.id}`,
+        ? `https://cinesrc.st/embed/tv/${data.id}?s=${s}&e=${e}`
+        : `https://cinesrc.st/embed/movie/${data.id}`,
       referrer: "no-referrer",
     },
   ];
