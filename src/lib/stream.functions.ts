@@ -30,8 +30,7 @@ function embedServers(data: z.infer<typeof schema>): StreamSource[] {
 }
 
 /**
- * Resolves the playable embed player for a title. The CodeSpecter key stays on
- * the server; only playback URLs reach the browser.
+ * Resolves the configured third-party embed player for a title.
  */
 export const getStreamSources = createServerFn({ method: "GET" })
   .inputValidator((input: unknown) => schema.parse(input))

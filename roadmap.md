@@ -11,3 +11,7 @@
 
 # Advertising removal
 - [x] Remove site-injected advertising scripts and the ad-network service worker.
+
+# Vercel deployment readiness
+- [x] Configure the Vercel deployment target and document the required TMDB secret.
+- [x] Add a safe environment-variable example and explain third-party playback limits.

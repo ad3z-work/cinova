@@ -11,3 +11,4 @@
 ## Design architecture
 - Use semantic Obsidian & Gold tokens with Instrument Serif display and Work Sans interface typography for the premium editorial cinema direction.
 - Share glass surfaces and interaction states through global semantic tokens and Button variants; provide opaque fallbacks so older TV browsers remain readable.
+- Configure Nitro for Vercel output outside Lovable while preserving the sandbox preview target, so the same source can be deployed on either host.
