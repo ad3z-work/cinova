@@ -24,3 +24,12 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Deploy to Vercel
+
+1. Import this repository into Vercel.
+2. Use `bun run build` as the build command. The Nitro Vercel target generates the deployment output.
+3. In Vercel project settings, add `TMDB_API_KEY` for every environment you deploy (Production, Preview, and Development). Use your TMDB **API Key (v3 auth)**, not the API Read Access Token. Keep it as a server environment variable; do not add a `VITE_` prefix or commit a real key.
+4. Deploy or redeploy after saving the variable.
+
+TMDB supplies the catalog, search, and title details. Playback is embedded from the configured third-party player, so playback availability and its built-in controls depend on that provider and cannot be guaranteed by this website.
