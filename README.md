@@ -1,35 +1,24 @@
-# CineStream Real
+# Lumiere
 
-create for me a fully functional movie streaming website that looks very real and realistic with real features and not demo or a prototype using this tmdb api key(cfeb9a142d3c0e7c518ca44225c8186a)
+A movie and TV discovery app powered by The Movie Database (TMDB), with third-party embedded playback.
 
-This project was built with [Lovable](https://lovable.dev).
+## Local development
 
-**Live app**: https://cinova.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/d69858ed-2554-46ae-95a7-9fb6674a80ba).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+1. Install [Bun](https://bun.sh/) and run `bun install`.
+2. Copy `.env.example` to `.env` and set `TMDB_API_KEY` to your TMDB **API Key (v3 auth)**. Keep the key private; do not use the API Read Access Token or a `VITE_` variable.
+3. Run `bun run dev` to start the local preview.
 
 ## Deploy to Vercel
 
 1. Import this repository into Vercel.
-2. Use `bun run build` as the build command. The Nitro Vercel target generates the deployment output.
-3. In Vercel project settings, add `TMDB_API_KEY` for every environment you deploy (Production, Preview, and Development). Use your TMDB **API Key (v3 auth)**, not the API Read Access Token. Keep it as a server environment variable; do not add a `VITE_` prefix or commit a real key.
+2. Set the build command to `bun run build`. Leave Vercel's output directory setting at its default; Nitro creates the deployment output.
+3. Add `TMDB_API_KEY` in Vercel's project environment variables for each environment you use (Production, Preview, and Development). Use the TMDB **API Key (v3 auth)**, not the API Read Access Token. Do not prefix the variable with `VITE_`.
 4. Deploy or redeploy after saving the variable.
 
-TMDB supplies the catalog, search, and title details. Playback is embedded from the configured third-party player, so playback availability and its built-in controls depend on that provider and cannot be guaranteed by this website.
+The movie catalog, search, and title details use TMDB. Playback is provided by a third-party embedded player, so its availability, controls, and compatibility are managed by that provider and cannot be guaranteed by this app. A successful Vercel deployment does not guarantee that every title is playable.
+
+## Project commands
+
+- `bun run dev` — local development
+- `bun run build` — production deployment build
+- `bun run lint` — lint source files

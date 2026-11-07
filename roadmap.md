@@ -15,3 +15,4 @@
 # Vercel deployment readiness
 - [x] Configure the Vercel deployment target and document the required TMDB secret.
 - [x] Add a safe environment-variable example and explain third-party playback limits.
+- [ ] Add a rotated TMDB v3 API key in Vercel's environment settings and deploy; this requires access to the Vercel project and TMDB account.
