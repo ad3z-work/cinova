@@ -1,4 +1,4 @@
-# CineStream
+# Lumiere
 
 A movie and TV discovery app powered by The Movie Database (TMDB), with third-party embedded playback.
 
