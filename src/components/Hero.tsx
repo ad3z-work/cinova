@@ -31,8 +31,6 @@ export function Hero({ items }: { items: MediaItem[] }) {
       <div key={item.id} className="absolute inset-0">
         <Img src={img(item.backdrop_path, "original")} alt={`${item.title} backdrop`} loading="eager" fetchPriority="high" className="h-full w-full object-cover" />
       </div>
-      <div className="absolute inset-0 side-fade" />
-      <div className="absolute inset-0 hero-fade" />
       <div className="relative mx-auto flex h-full max-w-[1600px] flex-col justify-end px-5 pb-20 pt-28 md:px-12 md:pb-24 lg:px-16">
         <h1 className="hero-title max-w-3xl break-words font-display text-5xl leading-[1.02] md:text-7xl lg:text-8xl">{item.title}</h1>
         <div className="mt-5 flex flex-wrap items-center gap-3 text-xs font-medium text-foreground/80">
